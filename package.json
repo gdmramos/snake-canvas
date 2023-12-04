@@ -1,0 +1,15 @@
+{
+  "name": "snake",
+  "version": "1.0.0",
+  "description": "snake game cover",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx browser-sync -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabriel Ramos",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.29.3"
+  }
+}
