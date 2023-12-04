@@ -1,10 +1,9 @@
-// import Ball from "./ball";
-// import Paddle from "./paddle";
-// import InputHandler from "./input";
+import InputHandler from "./input.js";
+import Snake from "./snake.js"
 
-// import Pause from "./screens/pause";
-// import Menu from "./screens/menu";
-// import GameOver from "./screens/over";
+import Pause from "../screens/pause.js";
+import Menu from "../screens/menu.js";
+import GameOver from "../screens/gameOver.js";
 // import GameComplete from "./screens/complete";
 
 const GAMESTATE = {
@@ -26,17 +25,19 @@ export default class Game {
     // this.sound = document.getElementById('theme');
     // this.sound.volume = 0.2;
 
-
-    // this.pause = new Pause(this);
-    // this.menu = new Menu(this);
-    // this.gameOver = new GameOver(this);
+    this.snake = new Snake(this);
+    this.pause = new Pause(this);
+    this.menu = new Menu(this);
+    this.gameOver = new GameOver(this);
     // this.gameComplete = new GameComplete(this);
 
-    // new InputHandler(this);
+    new InputHandler(this);
   }
 
   start() {
-    // this.gameObjects = [this.ball, this.paddle, ...bricks ];
+    this.gameObjects = [this.snake]
+
+    console.log("start")
 
     this.gameState = GAMESTATE.RUNNING
     // this.sound.play();
@@ -70,32 +71,35 @@ export default class Game {
       ctx.stroke()
     }
 
-    this.gameObjects.forEach(object => object.draw(ctx))
-
     if (this.gameState === GAMESTATE.PAUSED) {
-      // this.pause.draw(ctx);
+      this.pause.draw(ctx);
+      return
     }
 
     if (this.gameState === GAMESTATE.MENU) {
-      // this.menu.draw(ctx);
+      this.menu.draw(ctx);
+      return
     }
 
     if (this.gameState === GAMESTATE.GAMEOVER) {
-      // this.gameOver.draw(ctx);
+      this.gameOver.draw(ctx);
+      return
     }
 
     if (this.gameState === GAMESTATE.COMPLETE) {
       // this.gameComplete.draw(ctx);
     }
+
+    this.gameObjects.forEach(object => object.draw(ctx))
   }
 
-  // togglePause() {
-  //   if (this.gameState === GAMESTATE.PAUSED) {
-  //     this.sound.play()
-  //     this.gameState = GAMESTATE.RUNNING;
-  //   } else {
-  //     this.sound.pause()
-  //     this.gameState = GAMESTATE.PAUSED
-  //   }
-  // }
+  togglePause() {
+    if (this.gameState === GAMESTATE.PAUSED) {
+      // this.sound.play()
+      this.gameState = GAMESTATE.RUNNING;
+    } else {
+      // this.sound.pause()
+      this.gameState = GAMESTATE.PAUSED
+    }
+  }
 }

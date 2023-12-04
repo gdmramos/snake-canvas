@@ -9,26 +9,26 @@ const SQUARE_UNIT = 20
 
 const game = new Game(GAME_WIDTH, GAME_HEIGHT, SQUARE_UNIT)
 
-let lastTime = 0
-function gameLoop(timeStamp) {
-  let deltaTime = timeStamp - lastTime
-  lastTime = timeStamp
+let delta = 0
+let FPS = 5
+let then = performance.now()
+let interval = 1000 / FPS
 
-  // Clear the canvas
-  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
-
-  game.update(deltaTime)
-  game.draw(ctx)
-
-  drawSnake()
-
-  // Canvas Loop I supose
+function gameLoop(now) {
   requestAnimationFrame(gameLoop)
-}
 
-function drawSnake() {
-  ctx.fillStyle = "#3c822e"
-  ctx.fillRect(SQUARE_UNIT * 7, SQUARE_UNIT * 3, SQUARE_UNIT * 4, SQUARE_UNIT)
+  delta += now - then
+
+  if(delta > interval) {
+    delta = delta % interval
+    // Clear the canvas
+    ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT)
+  
+    game.update(delta)
+    game.draw(ctx)
+  }
+
+  then = now
 }
 
 requestAnimationFrame(gameLoop)
